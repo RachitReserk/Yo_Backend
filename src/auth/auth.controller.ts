@@ -33,11 +33,13 @@ export class AuthController {
     const accessToken = await this.authService.login(dto);
 
     res.cookie('accessToken', accessToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'none',
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+      httpOnly: true,          
+      secure: true,            
+      sameSite: 'none',        
+      path: '/',               
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
+    
     return { message: 'Login successful' };
   }
 

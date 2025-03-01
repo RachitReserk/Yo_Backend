@@ -35,8 +35,7 @@ export class AuthController {
     res.cookie('accessToken', accessToken, {
       httpOnly: true,          
       secure: true,            
-      sameSite: 'none',        
-      path: '/',               
+      sameSite: 'none',                
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
     
@@ -52,11 +51,14 @@ export class AuthController {
 
   @Post('logout')
   async logout(@Res() res: Response) {
+
     res.clearCookie('accessToken', {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      secure: true,
+      sameSite: 'none',
+      path: '/',
     });
+    
 
     return res.status(200).json({ message: 'Successfully logged out.' });
   }

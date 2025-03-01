@@ -22,8 +22,16 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## How to run it locally.
-Clone the repo.
-npm install ( or any other package manager , just to install dependencies. )
-create a .env and provide SECRET for JWT secret and MONGO_URI for mongoDB connect url.
-npm start and it will work flawlessly for sure ( in most cases .)
+## How to run it locally
+
+1. Clone the repository.
+
+2. Run `npm install` (or use your preferred package manager) to install dependencies.
+
+3. Create a `.env` file and provide the following environment variables:
+   - `SECRET` (JWT secret)
+   - `MONGO_URI` (MongoDB connection URL)
+
+4. Start the application using `npm start`. It should work flawlessly (in most cases).
+
+5. If you want to use this backend with a frontend application, make sure to enable CORS. You can configure this in `main.ts`.

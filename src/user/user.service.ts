@@ -6,7 +6,9 @@ import { UpdateProfileDto } from './dto/update-profile.dto';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User.name) private readonly userModel: Model<UserDocument>) {}
+  constructor(
+    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+  ) {}
 
   async getProfile(userId: string): Promise<Omit<User, 'password'>> {
     const user = await this.userModel.findById(userId).select('-password');
@@ -16,8 +18,13 @@ export class UserService {
     return user.toObject();
   }
 
-  async updateProfile(userId: string, dto: UpdateProfileDto): Promise<Omit<User, 'password'>> {
-    const user = await this.userModel.findByIdAndUpdate(userId, dto, { new: true }).select('-password');
+  async updateProfile(
+    userId: string,
+    dto: UpdateProfileDto,
+  ): Promise<Omit<User, 'password'>> {
+    const user = await this.userModel
+      .findByIdAndUpdate(userId, dto, { new: true })
+      .select('-password');
     if (!user) {
       throw new NotFoundException('User not found');
     }

@@ -1,4 +1,13 @@
-import { Controller, Post, Body , Get, Req, UseGuards , Res , HttpCode } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Req,
+  UseGuards,
+  Res,
+  HttpCode,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignupDto } from './dto/signup.dto';
 import { User } from '../schemas/user.schema';
@@ -7,8 +16,8 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { Request } from 'express';
 import { Response } from 'express';
 
-  @Controller('auth')
-  export class AuthController {
+@Controller('auth')
+export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('signup')
@@ -16,15 +25,18 @@ import { Response } from 'express';
     return this.authService.signup(signupDto);
   }
   @Post('login')
-  @HttpCode(200) 
-  async login(@Body() dto: LoginDto, @Res({ passthrough: true }) res: Response) {
+  @HttpCode(200)
+  async login(
+    @Body() dto: LoginDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
     const accessToken = await this.authService.login(dto);
-    
+
     res.cookie('accessToken', accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
-      maxAge: 7 * 24 * 60 * 60 * 1000, 
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     });
     return { message: 'Login successful' };
   }
@@ -37,13 +49,13 @@ import { Response } from 'express';
   }
 
   @Post('logout')
-async logout(@Res() res: Response) {
+  async logout(@Res() res: Response) {
     res.clearCookie('accessToken', {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
     });
 
     return res.status(200).json({ message: 'Successfully logged out.' });
-}
+  }
 }

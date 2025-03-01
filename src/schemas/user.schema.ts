@@ -3,7 +3,7 @@ import { Document, HydratedDocument } from 'mongoose';
 
 export type UserDocument = HydratedDocument<User>;
 
-@Schema({ timestamps: true }) 
+@Schema({ timestamps: true })
 export class User {
   @Prop({ required: true, unique: true })
   username: string;
@@ -20,7 +20,7 @@ export class User {
   @Prop({ required: true, type: Date })
   birthDate: Date;
 
-  @Prop({ required: true, enum: ['Male', 'Female', 'Other'] }) 
+  @Prop({ required: true, enum: ['Male', 'Female', 'Other'] })
   gender: string;
 
   @Prop({ type: String, default: '' })

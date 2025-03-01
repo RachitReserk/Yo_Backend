@@ -8,16 +8,18 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-  JwtModule.registerAsync({
-    imports: [ConfigModule],
-    inject: [ConfigService],
-    useFactory: (configService: ConfigService) => ({
-      secret: configService.get<string>('SECRET'), 
-      signOptions: { expiresIn: '1h' },
+  imports: [
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get<string>('SECRET'),
+        signOptions: { expiresIn: '1h' },
+      }),
     }),
-  })],
-  providers: [AuthService,JwtAuthGuard],
+  ],
+  providers: [AuthService, JwtAuthGuard],
   controllers: [AuthController],
   exports: [AuthService, JwtModule],
 })

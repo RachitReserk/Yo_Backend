@@ -29,6 +29,7 @@
 2. Run `npm install` (or use your preferred package manager) to install dependencies.
 
 3. Create a `.env` file and provide the following environment variables:
+
    - `SECRET` (JWT secret)
    - `MONGO_URI` (MongoDB connection URL)
 

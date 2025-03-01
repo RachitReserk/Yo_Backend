@@ -1,4 +1,11 @@
-import { IsEmail, IsNotEmpty, MinLength, IsDate, IsEnum, IsString } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  MinLength,
+  IsDate,
+  IsEnum,
+  IsString,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class SignupDto {

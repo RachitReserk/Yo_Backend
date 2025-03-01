@@ -1,4 +1,9 @@
-import { Injectable, BadRequestException,NotFoundException,UnauthorizedException,ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+  ConflictException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcryptjs';
@@ -9,11 +14,12 @@ import { LoginDto } from './dto/login.dto';
 
 @Injectable()
 export class AuthService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>,
-  private jwtService: JwtService,) {}
+  constructor(
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    private jwtService: JwtService,
+  ) {}
 
   async signup(dto: SignupDto): Promise<Omit<User, 'password'>> {
-
     const existingUser = await this.userModel.findOne({
       $or: [{ email: dto.email }, { username: dto.username }],
     });
@@ -34,7 +40,7 @@ export class AuthService {
 
   async login(dto: LoginDto): Promise<{ accessToken: string }> {
     const { email, password } = dto;
-    
+
     const user = await this.userModel.findOne({ email });
     if (!user) {
       throw new NotFoundException('User not found');
@@ -58,5 +64,5 @@ export class AuthService {
       throw new UnauthorizedException('User not found');
     }
     return user.toObject();
-}
+  }
 }
